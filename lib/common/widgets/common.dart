@@ -4,6 +4,9 @@ import 'package:badges/badges.dart' as badges;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:loveria/generated/assets.dart';
+import 'package:loveria/screens/myInterest/screen/my_interest_screen.dart';
 import '../../screens/premium.dart';
 import '../../screens/user/change_email.dart';
 import '../../screens/user/change_password.dart';
@@ -160,7 +163,7 @@ class AppDrawer extends StatelessWidget {
             otherAccountsPicturesSize: const Size.square(80),
           ),
           if (!auth.getAuthInfo('is_premium'))
-           /* ListTile(
+            /* ListTile(
               leading: const PremiumBadgeWidget(
                 size: 24,
                 preventTap: true,
@@ -179,7 +182,7 @@ class AppDrawer extends StatelessWidget {
                 navigatePage(context, const PremiumPage());
               },
             ),*/
-         /* ListTile(
+            /* ListTile(
             leading: const Icon(
               Icons.star,
               // color: Theme.of(context).primaryColor,
@@ -202,7 +205,7 @@ class AppDrawer extends StatelessWidget {
                   ));
             },
           ),*/
-          /*ListTile(
+            /*ListTile(
             leading: const Icon(
               Icons.blender,
               // color: Theme.of(context).primaryColor,
@@ -225,7 +228,7 @@ class AppDrawer extends StatelessWidget {
                   ));
             },
           ),*/
-         /* ListTile(
+            /* ListTile(
             leading: const Icon(Icons.wallet),
             title: const Text("Credit Wallet"),
             onTap: () {
@@ -236,11 +239,41 @@ class AppDrawer extends StatelessWidget {
               );
             },
           ),*/
+            ListTile(
+              leading: const Icon(Icons.thumb_up),
+              title: Row(
+                children: [
+                  const Text('Who liked me'),
+                  if (auth.getAuthInfo(
+                          'additional_user_info.is_premium_only.show_likes',
+                          false) ==
+                      true)
+                    const PremiumBadgeWidget(
+                      size: 24,
+                    )
+                ],
+              ),
+              onTap: () {
+                // Then close the drawer
+                Navigator.pop(context);
+                navigatePage(
+                    context,
+                    UsersListPage(
+                      title: 'Who liked me',
+                      pageBaseUrl: 'who-liked-me',
+                    ));
+              },
+            ),
           ListTile(
-            leading: const Icon(Icons.thumb_up),
+            leading: SvgPicture.asset(
+              Assets.imagesMyInterest,
+              color: Colors.white,
+              width: 24,
+              height: 24,
+            ),
             title: Row(
               children: [
-                const Text('Who liked me'),
+                const Text('My Interests'),
                 if (auth.getAuthInfo(
                         'additional_user_info.is_premium_only.show_likes',
                         false) ==
@@ -253,15 +286,11 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               // Then close the drawer
               Navigator.pop(context);
-              navigatePage(
-                  context,
-                  UsersListPage(
-                    title: 'Who liked me',
-                    pageBaseUrl: 'who-liked-me',
-                  ));
+
+              navigatePage(context, MyInterestScreen());
             },
           ),
-    /*      ListTile(
+          /*      ListTile(
             leading: const Icon(Icons.repeat),
             title: const Text('Mutual likes'),
             onTap: () {
@@ -289,7 +318,7 @@ class AppDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ListTile(
+          /*   ListTile(
             leading: const Icon(CupertinoIcons.heart_slash),
             title: const Text('My Dislikes'),
             onTap: () {
@@ -302,7 +331,7 @@ class AppDrawer extends StatelessWidget {
                     pageBaseUrl: 'disliked',
                   ));
             },
-          ),
+          ),*/
           Visibility(
             visible: false,
             child: ListTile(
@@ -630,14 +659,14 @@ AppBar mainAppBarWidget(
       centerTitle: false,
       actions: actionWidgets ??
           <Widget>[
-           /* IconButton(
+            /* IconButton(
               icon: const Icon(Icons.bolt),
               tooltip: 'Boost Profile',
               onPressed: () {
                 navigatePage(context, const BoosterPage());
               },
             ),*/
-           /* IconButton(
+            /* IconButton(
               icon: const Icon(Icons.wallet),
               tooltip: 'Credit Wallet',
               onPressed: () {

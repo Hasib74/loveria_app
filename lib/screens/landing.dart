@@ -5,7 +5,10 @@ import 'package:fbroadcast/fbroadcast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:loveria/generated/assets.dart';
+import 'package:loveria/screens/myInterest/screen/my_interest_screen.dart';
 import 'package:loveria/screens/schedule/schedular.dart';
 import 'banner_screen.dart';
 import 'messenger/audio_video_calls.dart';
@@ -161,20 +164,21 @@ class _LandingPageState extends State<LandingPage> with WidgetsBindingObserver {
     setState(() {
       switch (i) {
         case 0:
-          tabTitle = 'Find';
+          tabTitle = 'Home';
           break;
         case 1:
           tabTitle = 'My Profile';
           break;
         case 2:
           //   tabTitle = 'Encounter';
-          tabTitle = 'Home';
+          tabTitle = 'My Interest';
           break;
         case 3:
-          tabTitle = 'Schedule';
+          tabTitle = 'Scheduler';
           break;
         case 4:
-          tabTitle = 'Who Likes Me';
+
+          tabTitle = 'My Matches';
           break;
         default:
       }
@@ -241,17 +245,24 @@ class _LandingPageState extends State<LandingPage> with WidgetsBindingObserver {
                             Expanded(
                               child: TabBarView(
                                 children: [
-                                  UsersListPage(),
-                                  const ProfileDetailsPage(),
-                                  //   EncounterPage(),
+                                  //UsersListPage(),
+
                                   BannerScreen(),
+
+                                  ProfileDetailsPage(),
+                                  //   EncounterPage(),
+
+                                  MyInterestScreen(
+                                    hasAppBar: false,
+                                  ),
+
                                   SchedulerPage(),
                                   //MessengerPage(),
                                   UsersListPage(
                                     title: 'Who liked me',
                                     pageBaseUrl: 'who-liked-me',
                                     hasAppBar: false,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -259,20 +270,27 @@ class _LandingPageState extends State<LandingPage> with WidgetsBindingObserver {
                         ),
                         bottomNavigationBar: ConvexAppBar(
                           color: Colors.white,
+                          activeColor: Theme.of(context).primaryColor,
                           backgroundColor:
                               Theme.of(context).colorScheme.background,
                           items: const [
                             // Find
-                            TabItem(
+                            /*   TabItem(
                               icon: CupertinoIcons.search,
-                            ),
+                            ),*/
                             // my profile
-                            TabItem(
-                              icon: CupertinoIcons.person,
-                            ),
+
                             // encounter
                             TabItem(
                               icon: CupertinoIcons.home,
+                            ),
+
+                            TabItem(
+                              icon: CupertinoIcons.person,
+                            ),
+
+                            TabItem(
+                              icon: CupertinoIcons.heart_slash_circle,
                             ),
                             // my photos
                             TabItem(
@@ -282,6 +300,15 @@ class _LandingPageState extends State<LandingPage> with WidgetsBindingObserver {
                             TabItem(
                               icon: CupertinoIcons.heart,
                             ),
+
+                            /*  TabItem(
+                              icon: SvgPicture.asset(
+                                Assets.imagesMyInterest,
+                                color:   Colors.white,
+                                width: 24,
+                                height: 24,
+                              ),
+                            ),*/
                           ],
                           onTabNotify: (int i) {
                             setTabTitle(i);
